@@ -13,7 +13,7 @@
 ![Method](https://img.shields.io/badge/training-Unsloth_QLoRA-FF6F00?style=flat-square)
 ![Runtime](https://img.shields.io/badge/runtime-Ollama_GGUF_q4__k__m-000000?style=flat-square&logo=ollama&logoColor=white)
 ![Stack](https://img.shields.io/badge/stack-FastAPI_·_React_19_·_Docker-22d3ee?style=flat-square)
-![Status](https://img.shields.io/badge/status-built_·_tested_·_private_release-00C853?style=flat-square)
+![Status](https://img.shields.io/badge/status-public_case_study-00C853?style=flat-square)
 
 *Built with Gemma · Educational research demonstrator · Not a medical device · No personal data processed during development · No code, datasets or model weights distributed in this repository*
 
@@ -50,7 +50,7 @@ It was built for the **Gemma 4 Good Hackathon** on Kaggle and validated end-to-e
 ## What it looks like
 
 ![Results dashboard — twelve disorder cards with percentile gauges](https://raw.githubusercontent.com/SergheiBrinza/PsychGeno/main/screenshots/02-results-dashboard.png)
-*Results dashboard. Twelve cards, sorted by percentile. One disorder flagged elevated, the rest clustered around the population mean — the picture you'd expect from a real genome rather than a cherry-picked demo.*
+*Results dashboard. Twelve cards, sorted by percentile. One disorder flagged elevated, the rest clustered around the population mean — the kind of distribution typical of a single individual's genome rather than a cherry-picked demo.*
 
 ![Upload — six DTC formats supported, processed locally](https://raw.githubusercontent.com/SergheiBrinza/PsychGeno/main/screenshots/01-upload.png)
 *Upload screen. 23andMe, AncestryDNA, MyHeritage, FTDNA, Living DNA, VCF. Gzipped variants welcome. The file never leaves the machine — that promise is structural, not a setting.*
@@ -124,7 +124,7 @@ The dotted boundary is the important part. The model lives entirely inside it. B
 
 A few non-obvious choices that shaped the project.
 
-**Disclaimers in weights, not just prompts.** Every fine-tuning example carries the "not a diagnosis" frame, so the safety property survives prompt injection. Strip the system prompt and the model still behaves; the failure mode is "less polished," not "suddenly gives medical advice." That asymmetry is hard to get from system prompts alone.
+**Disclaimers in weights, not just prompts.** Every fine-tuning example carries the "not a diagnosis" frame, so the safety framing is anchored at the weight level rather than only in the system prompt. The fine-tune is not a substitute for guard-rails — it's a layer that's hard to bypass with prompt edits alone.
 
 **Percentiles only, never absolute risk.** PRS for these conditions explains 1-10% of variance on a good day. Translating that to "you have a 23% chance of developing schizophrenia" is statistically wrong and clinically destructive. The model is trained — and the system prompt enforces — to talk about position relative to a reference distribution, never about absolute probabilities.
 
@@ -162,7 +162,7 @@ Accuracy drops outside European-ancestry cohorts. PGC summary statistics over-re
 
 The AI assistant can be wrong, especially on edge-case questions about specific drugs or rare syndromes. Every answer ends with a "talk to a professional" reminder that's hard to prompt-engineer away.
 
-There's no clinical validation. PsychGeno is explicitly an educational research tool, not a medical device. An internal legal self-audit was conducted covering EU MDR, GDPR, FDA classification, the EU AI Act and Germany's GenDG.
+There's no clinical validation. PsychGeno is explicitly an educational research tool, not a medical device. An internal legal self-assessment was performed covering EU MDR positioning, GDPR data-flow analysis, FDA non-device classification, the EU AI Act risk categorisation and Germany's GenDG. Self-assessment is not regulatory approval and is not represented as such.
 
 ---
 
@@ -170,7 +170,7 @@ There's no clinical validation. PsychGeno is explicitly an educational research 
 
 A few statements I want to be explicit about, because the domain demands it.
 
-**No third-party personal data was processed during development.** The system was validated using synthetic genomes and the author's own self-test files. No consumer DNA from anyone other than the author has ever been used in building this project.
+**No third-party personal data was used in development.** Functional testing relied on synthetic test genomes and the author's own self-test files. No third-party consumer DNA was retained, redistributed, or used in dataset construction or model fine-tuning.
 
 **No patient records, no clinical notes, no protected health information** entered the training dataset. The instruction-following pairs were author-written, modelled on standard educational genetics communication, and reviewed for safety framing before fine-tuning. The product does not store, transmit or train on user data at runtime.
 
@@ -178,7 +178,7 @@ A few statements I want to be explicit about, because the domain demands it.
 
 **Built with Gemma.** This product uses Google DeepMind's Gemma 4 base model, governed by the [Gemma Terms of Use](https://ai.google.dev/gemma/terms). The author acknowledges Google as the upstream provider of the base weights.
 
-**Privacy-by-design, not by policy.** The runtime architecture forecloses cloud processing: there is no inference path that reaches the public internet. Session data on the local backend auto-deletes after 60 minutes; no telemetry is emitted. In any deployment, genome data is computed on by the end-user's own machine — no controller-processor relationship under GDPR is created by use of this software.
+**Privacy-by-design, not by policy.** The runtime architecture forecloses cloud processing: there is no inference path that reaches the public internet. Session data on the local backend auto-deletes after 60 minutes; no telemetry is emitted. In a standard local-only deployment, genome data is computed on by the end-user's own machine, and the architecture is designed so that the author does not become a controller or processor of that data under GDPR. Operators of any future hosted deployment would need to perform their own GDPR assessment.
 
 **Educational research demonstrator, not a medical device.** PsychGeno makes no diagnostic claim, no treatment recommendation, and no probability-of-disease statement. It computes population-relative percentiles from public summary statistics and provides plain-language educational explanations. Users are reminded — at consent, at first reveal, in every AI answer, on every PDF page — to consult a qualified clinician for anything that matters.
 
