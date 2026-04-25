@@ -15,7 +15,7 @@
 ![Stack](https://img.shields.io/badge/stack-FastAPI_·_React_19_·_Docker-22d3ee?style=flat-square)
 ![Status](https://img.shields.io/badge/status-built_·_tested_·_private_release-00C853?style=flat-square)
 
-*This repository is a public case study. The source code, training data and trained weights are kept in private repositories and are not redistributed here.*
+*Built with Gemma · Educational research demonstrator · Not a medical device · No personal data processed during development · No code, datasets or model weights distributed in this repository*
 
 </div>
 
@@ -37,7 +37,7 @@ The few tools that bridge the gap ask you to upload your genotype to their cloud
 
 PsychGeno is the version I wanted to exist. You hand it a file. The file never leaves your machine. Twelve PRS calculations run locally, get standardised against population parameters, and surface as percentiles with bell curves and SNP tables. A Gemma 4 model — fine-tuned for this domain, served by your own Ollama — explains every score in plain language. In English, German or Russian, and any other tongue Gemma natively speaks.
 
-It was built for the **Gemma 4 Good Hackathon** on Kaggle and tested end-to-end on a single workstation. Upload, parse, score, render, chat, PDF export, auto-deletion — every path was exercised against real 23andMe and VCF files until it ran clean.
+It was built for the **Gemma 4 Good Hackathon** on Kaggle and validated end-to-end on a single workstation, using synthetic test genomes and the author's own self-test files in the supported formats. Upload, parse, score, render, chat, PDF export, auto-deletion — every path was exercised until it ran clean.
 
 ---
 
@@ -94,9 +94,9 @@ The fine-tune is a textbook Unsloth + TRL setup, with a couple of decisions wort
 
 **Loss masked to assistant turns only.** Trainable tokens cover only what the model is supposed to *say*, never what the user typed. Implemented through TRL's `train_on_responses_only` with the `gemma-4` chat template's turn boundaries. Without this, the model partly learns to generate user prompts — which sounds harmless, but in a safety-sensitive context it lets adversarial prompt fragments shape the output distribution.
 
-**Hand-curated dataset, not synthetic.** A few hundred ShareGPT-style pairs covering twelve disorders, percentile interpretation, signal-SNP explanations, safety fallbacks, gene Q&A, cross-disorder comparisons, and EN/DE/RU translations. Every example carries the "not a diagnosis / environment matters / consult a clinician" framing — so safety becomes a weight property, not a prompt heuristic.
+**Hand-curated instruction-following dataset.** Author-written ShareGPT-style pairs covering the twelve disorders, percentile interpretation, signal-SNP explanations, safety fallbacks, general Q&A, cross-disorder comparisons, and EN/DE/RU translations. Every example carries the "not a diagnosis / environment matters / consult a clinician" framing — so safety becomes a weight property, not a prompt heuristic. No patient records, no clinical text and no protected health information were used in dataset construction.
 
-**Three epochs, cosine schedule, `adamw_8bit`.** Three was the sweet spot in eval — at two the model still hedged generically, at four it started memorising specific phrasings. Optimiser is the 8-bit AdamW from bitsandbytes; on this scale it costs no measurable accuracy and saves enough VRAM to bump batch size.
+**Three epochs, cosine schedule, `adamw_8bit`.** Three was the sweet spot in eval — at two the model still hedged generically, at four overfitting signals appeared in held-out responses. Optimiser is the 8-bit AdamW from bitsandbytes; on this scale it costs no measurable accuracy and saves enough VRAM to bump batch size.
 
 **Quantise after merge.** LoRA adapters get merged into the base, then the merged model is quantised through `save_pretrained_gguf` to `q4_k_m`. Final file: 5 GB. Roughly 3× compression versus bf16 merged, ~1-2% benchmark impact. This is the artefact that ends up in Ollama.
 
@@ -136,7 +136,7 @@ A few non-obvious choices that shaped the project.
 
 ![Eight-layer safety stack](assets/safety-stack.svg)
 
-**Hand-curated > synthetic for safety-critical SFT.** A bootstrapped synthetic dataset would have been faster, but synthetic data drifts toward the LLM's prior, and the prior on "patient asks about schizophrenia gene" is not safe. Hand-writing the pairs is slow but necessary for this kind of fine-tune.
+**Hand-curated > synthetic for safety-critical SFT.** A bootstrapped synthetic dataset would have been faster, but synthetic data drifts toward the LLM's prior, and the prior on questions like "what does this gene mean for me" is not safe. Hand-writing the pairs is slow but necessary for this kind of fine-tune.
 
 **Single-GPU as a constraint, not a limit.** The whole project — training, inference, deployment — fits in 6 GB of VRAM at peak. That constraint shaped every decision, from picking E4B over 12B to using 4-bit base + bf16 LoRA. The output is a system that runs on consumer hardware, which is the only hardware tier that scales to fifty million 23andMe users.
 
@@ -162,7 +162,29 @@ Accuracy drops outside European-ancestry cohorts. PGC summary statistics over-re
 
 The AI assistant can be wrong, especially on edge-case questions about specific drugs or rare syndromes. Every answer ends with a "talk to a professional" reminder that's hard to prompt-engineer away.
 
-There's no clinical validation. PsychGeno is explicitly an educational research tool, not a medical device. The legal self-audit covers EU MDR, GDPR, FDA classification, the EU AI Act and Germany's GenDG.
+There's no clinical validation. PsychGeno is explicitly an educational research tool, not a medical device. An internal legal self-audit was conducted covering EU MDR, GDPR, FDA classification, the EU AI Act and Germany's GenDG.
+
+---
+
+## Compliance & ethics
+
+A few statements I want to be explicit about, because the domain demands it.
+
+**No third-party personal data was processed during development.** The system was validated using synthetic genomes and the author's own self-test files. No consumer DNA from anyone other than the author has ever been used in building this project.
+
+**No patient records, no clinical notes, no protected health information** entered the training dataset. The instruction-following pairs were author-written, modelled on standard educational genetics communication, and reviewed for safety framing before fine-tuning. The product does not store, transmit or train on user data at runtime.
+
+**Public data sources, used under their public terms.** GWAS summary statistics from the Psychiatric Genomics Consortium are accessed under PGC's open-data policy. Reference polygenic-score definitions come from the PGS Catalog. None of these files are redistributed in this repository.
+
+**Built with Gemma.** This product uses Google DeepMind's Gemma 4 base model, governed by the [Gemma Terms of Use](https://ai.google.dev/gemma/terms). The author acknowledges Google as the upstream provider of the base weights.
+
+**Privacy-by-design, not by policy.** The runtime architecture forecloses cloud processing: there is no inference path that reaches the public internet. Session data on the local backend auto-deletes after 60 minutes; no telemetry is emitted. In any deployment, genome data is computed on by the end-user's own machine — no controller-processor relationship under GDPR is created by use of this software.
+
+**Educational research demonstrator, not a medical device.** PsychGeno makes no diagnostic claim, no treatment recommendation, and no probability-of-disease statement. It computes population-relative percentiles from public summary statistics and provides plain-language educational explanations. Users are reminded — at consent, at first reveal, in every AI answer, on every PDF page — to consult a qualified clinician for anything that matters.
+
+**Crisis-safety design.** The product surfaces verified national crisis-line numbers as a passive safety net, not as a triage intervention. The numbers route through the user's own dialler; no contact information is collected.
+
+**Source code, training data and trained model weights are not part of this repository** and are not publicly released. The project is shared as a documented case study, not as a deployable artefact, until a regulated path to validation is established.
 
 ---
 
@@ -204,10 +226,12 @@ Location: Vienna, Austria · open to remote and EU-based roles.
 
 ## Repository status
 
-This is a public case-study repository. Source code, training data, and trained model weights live in separate **private** repositories and are not redistributed here. If you're an employer, recruiter or collaborator and want a deeper technical walk-through, reach out — I'm happy to share live demos and code under a mutual NDA.
+This is a public case-study repository. It contains documentation, architectural diagrams and screenshots only. Source code, training data, GWAS files and trained model weights are not part of this repository and are not publicly released. Employers and collaborators interested in a deeper technical walk-through are welcome to reach out via the contact details above; substantive technical exchanges happen under a mutual NDA.
 
 ## Licence
 
-Documentation and assets in this repository are licensed under [Creative Commons Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/). The PsychGeno application itself, including code and model weights, is governed by separate non-public licences.
+Documentation, diagrams and screenshots in this repository are licensed under [Creative Commons Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/).
 
-This project is an educational research demonstrator. Not a medical device. Not FDA or CE approved. Talk to a qualified clinician about anything that matters.
+The PsychGeno application itself — its source code, training data and trained model weights — is **not** released under this licence and is **not** included in this repository. Any use of those assets requires separate written agreement.
+
+This project is an educational research demonstrator. Not a medical device. Not FDA, CE or any regulatory-body approved. Talk to a qualified clinician about anything that matters.
