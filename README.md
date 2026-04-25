@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/logo-dna.svg" alt="PsychGeno animated DNA helix" width="180" height="180"/>
+<img src="https://raw.githubusercontent.com/SergheiBrinza/PsychGeno/main/assets/logo-dna.svg" alt="PsychGeno animated DNA helix" width="180" height="180"/>
 
 # PsychGeno
 
@@ -21,7 +21,7 @@
 
 <br/>
 
-![PsychGeno hero banner — DNA helix with stack labels](assets/hero-banner.svg)
+![PsychGeno hero banner — DNA helix with stack labels](https://raw.githubusercontent.com/SergheiBrinza/PsychGeno/main/assets/hero-banner.svg)
 
 > A consumer-genome file goes in. A calibrated polygenic risk picture across 12 psychiatric disorders comes out, with a fine-tuned Gemma 4 explaining every percentile in plain language. The whole pipeline runs on the user's own GPU. No upload. No cloud. No third-party API in the analysis path.
 
@@ -43,25 +43,25 @@ It was built for the **Gemma 4 Good Hackathon** on Kaggle and validated end-to-e
 
 ## By the numbers
 
-![PsychGeno scale — 12 disorders, 6 formats, 140 languages, 8 safety layers](assets/by-the-numbers.svg)
+![PsychGeno scale — 12 disorders, 6 formats, 140 languages, 8 safety layers](https://raw.githubusercontent.com/SergheiBrinza/PsychGeno/main/assets/by-the-numbers.svg)
 
 ---
 
 ## What it looks like
 
-![Results dashboard — twelve disorder cards with percentile gauges](screenshots/02-results-dashboard.png)
+![Results dashboard — twelve disorder cards with percentile gauges](https://raw.githubusercontent.com/SergheiBrinza/PsychGeno/main/screenshots/02-results-dashboard.png)
 *Results dashboard. Twelve cards, sorted by percentile. One disorder flagged elevated, the rest clustered around the population mean — the picture you'd expect from a real genome rather than a cherry-picked demo.*
 
-![Upload — six DTC formats supported, processed locally](screenshots/01-upload.png)
+![Upload — six DTC formats supported, processed locally](https://raw.githubusercontent.com/SergheiBrinza/PsychGeno/main/screenshots/01-upload.png)
 *Upload screen. 23andMe, AncestryDNA, MyHeritage, FTDNA, Living DNA, VCF. Gzipped variants welcome. The file never leaves the machine — that promise is structural, not a setting.*
 
-![ADHD detail page — bell curve, key variants, AI commentary](screenshots/03-disorder-detail.png)
+![ADHD detail page — bell curve, key variants, AI commentary](https://raw.githubusercontent.com/SergheiBrinza/PsychGeno/main/screenshots/03-disorder-detail.png)
 *Per-disorder detail. Bell curve, position on the curve, the SNPs that drove the contribution, environmental factors that matter, and an AI explanation streamed token-by-token over Server-Sent Events.*
 
-![AI chat — multilingual by default](screenshots/04-ai-chat.png)
+![AI chat — multilingual by default](https://raw.githubusercontent.com/SergheiBrinza/PsychGeno/main/screenshots/04-ai-chat.png)
 *Multilingual chat. Six example languages shown. The base model handles 140+ natively, so a user in Polish or Vietnamese gets answered in Polish or Vietnamese without any flag-flipping in the UI.*
 
-![Learn — five-step intro to genomic literacy](screenshots/05-learn.png)
+![Learn — five-step intro to genomic literacy](https://raw.githubusercontent.com/SergheiBrinza/PsychGeno/main/screenshots/05-learn.png)
 *Learn mode. Five steps designed for someone who's never heard the word "polygenic" before, sized for a phone screen.*
 
 ---
@@ -84,7 +84,7 @@ There's also the prosaic reason. Unsloth ships a 4-bit pre-quantised version wit
 
 ## Training methodology
 
-![QLoRA training pipeline — 7 stages from PGC pull to Ollama deploy](assets/training-pipeline.svg)
+![QLoRA training pipeline — 7 stages from PGC pull to Ollama deploy](https://raw.githubusercontent.com/SergheiBrinza/PsychGeno/main/assets/training-pipeline.svg)
 
 The fine-tune is a textbook Unsloth + TRL setup, with a couple of decisions worth flagging.
 
@@ -106,7 +106,7 @@ The whole pipeline — data pull, dataset generation, training, merge, quantise,
 
 ## System architecture
 
-![System architecture — frontend, backend, local AI, no cloud](assets/architecture.svg)
+![System architecture — frontend, backend, local AI, no cloud](https://raw.githubusercontent.com/SergheiBrinza/PsychGeno/main/assets/architecture.svg)
 
 The dotted boundary is the important part. The model lives entirely inside it. Backend, frontend, Ollama, GWAS data, session store — everything is on the user's machine. The only outbound traffic in the entire user journey is the optional `tel:` link the user clicks themselves on the crisis-hotline button.
 
@@ -134,7 +134,7 @@ A few non-obvious choices that shaped the project.
 
 **Safety stack, not safety setting.** Eight independent layers, each blocking the path independently. Consent flow, cooldown, crisis hotline, weight-baked disclaimers, percentile-only language, auto-deletion, watermark, ancestry-bias warning. If any layer fails, the next one catches. No single point of failure for safety.
 
-![Eight-layer safety stack](assets/safety-stack.svg)
+![Eight-layer safety stack](https://raw.githubusercontent.com/SergheiBrinza/PsychGeno/main/assets/safety-stack.svg)
 
 **Hand-curated > synthetic for safety-critical SFT.** A bootstrapped synthetic dataset would have been faster, but synthetic data drifts toward the LLM's prior, and the prior on questions like "what does this gene mean for me" is not safe. Hand-writing the pairs is slow but necessary for this kind of fine-tune.
 
@@ -216,7 +216,7 @@ PsychGeno is one of several projects in my portfolio that combines local-first A
 
 ## Contact
 
-Email: `aigptprofi@gmail.com`
+Email: `brinzaengineeringai@gmail.com`
 
 LinkedIn: [linkedin.com/in/serghei-brinza](https://linkedin.com/in/serghei-brinza)
 
