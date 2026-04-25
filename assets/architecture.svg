@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" width="1200" height="560" role="img" aria-label="PsychGeno system architecture">
+  <defs>
+    <linearGradient id="bgA" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#020617"/>
+      <stop offset="100%" stop-color="#0a1626"/>
+    </linearGradient>
+    <linearGradient id="boxFront" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0c2d4d"/>
+      <stop offset="100%" stop-color="#0a2236"/>
+    </linearGradient>
+    <linearGradient id="boxBack" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1a2f1f"/>
+      <stop offset="100%" stop-color="#14241a"/>
+    </linearGradient>
+    <linearGradient id="boxAI" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3a1a4d"/>
+      <stop offset="100%" stop-color="#2d1138"/>
+    </linearGradient>
+    <linearGradient id="boxBound" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0e1a2b"/>
+      <stop offset="100%" stop-color="#0a1421"/>
+    </linearGradient>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8"/>
+    </marker>
+    <marker id="arrCyan" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#22d3ee"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="560" fill="url(#bgA)"/>
+
+  <text x="40" y="48" font-family="ui-sans-serif, system-ui, sans-serif" font-size="22" font-weight="700" fill="#e2e8f0">System architecture</text>
+  <text x="40" y="74" font-family="ui-sans-serif, sans-serif" font-size="13" fill="#64748b">All boxes live on the user's machine. No external network call exists in the analysis path.</text>
+
+  <!-- Local boundary -->
+  <rect x="40" y="100" width="1120" height="380" rx="16" fill="none" stroke="#334155" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="60" y="124" font-family="ui-monospace, monospace" font-size="11" fill="#64748b" letter-spacing="1.5">LOCAL MACHINE — NO CLOUD INSIDE THIS BOX</text>
+
+  <!-- User -->
+  <g transform="translate(70 280)">
+    <circle cx="40" cy="40" r="34" fill="#0e1a2b" stroke="#1e3a5f" stroke-width="2"/>
+    <text x="40" y="45" text-anchor="middle" font-family="ui-sans-serif, sans-serif" font-size="32">👤</text>
+    <text x="40" y="100" text-anchor="middle" font-family="ui-sans-serif, sans-serif" font-size="13" fill="#94a3b8">user + DNA file</text>
+  </g>
+
+  <!-- Frontend -->
+  <g transform="translate(220 200)">
+    <rect width="220" height="200" rx="12" fill="url(#boxFront)" stroke="#0891b2" stroke-width="1.5"/>
+    <text x="20" y="32" font-family="ui-monospace, monospace" font-size="11" fill="#22d3ee" letter-spacing="1">FRONTEND</text>
+    <text x="20" y="60" font-family="ui-sans-serif, sans-serif" font-size="15" font-weight="700" fill="#f1f5f9">React 19 · TS · Vite</text>
+    <line x1="20" y1="76" x2="200" y2="76" stroke="#1e3a5f"/>
+    <text x="20" y="100" font-family="ui-sans-serif, sans-serif" font-size="12" fill="#cbd5e1">Tailwind v4</text>
+    <text x="20" y="120" font-family="ui-sans-serif, sans-serif" font-size="12" fill="#cbd5e1">Recharts · gauge</text>
+    <text x="20" y="140" font-family="ui-sans-serif, sans-serif" font-size="12" fill="#cbd5e1">react-dropzone</text>
+    <text x="20" y="160" font-family="ui-sans-serif, sans-serif" font-size="12" fill="#cbd5e1">SSE streaming chat</text>
+    <text x="20" y="184" font-family="ui-sans-serif, sans-serif" font-size="11" fill="#64748b">EN · DE · RU UI</text>
+  </g>
+
+  <!-- Backend -->
+  <g transform="translate(490 200)">
+    <rect width="240" height="200" rx="12" fill="url(#boxBack)" stroke="#22c55e" stroke-width="1.5"/>
+    <text x="20" y="32" font-family="ui-monospace, monospace" font-size="11" fill="#86efac" letter-spacing="1">BACKEND</text>
+    <text x="20" y="60" font-family="ui-sans-serif, sans-serif" font-size="15" font-weight="700" fill="#f1f5f9">FastAPI · Python 3.12</text>
+    <line x1="20" y1="76" x2="220" y2="76" stroke="#14532d"/>
+    <text x="20" y="100" font-family="ui-monospace, monospace" font-size="12" fill="#bbf7d0">parser · 6 DTC formats</text>
+    <text x="20" y="120" font-family="ui-monospace, monospace" font-size="12" fill="#bbf7d0">snp_matcher · allele align</text>
+    <text x="20" y="140" font-family="ui-monospace, monospace" font-size="12" fill="#bbf7d0">prs · C+T sum β·dosage</text>
+    <text x="20" y="160" font-family="ui-monospace, monospace" font-size="12" fill="#bbf7d0">z-score → percentile</text>
+    <text x="20" y="184" font-family="ui-sans-serif, sans-serif" font-size="11" fill="#64748b">session TTL 60 min · auto-sweep</text>
+  </g>
+
+  <!-- AI / Ollama -->
+  <g transform="translate(780 200)">
+    <rect width="340" height="200" rx="12" fill="url(#boxAI)" stroke="#a855f7" stroke-width="1.5"/>
+    <text x="20" y="32" font-family="ui-monospace, monospace" font-size="11" fill="#d8b4fe" letter-spacing="1">LOCAL AI</text>
+    <text x="20" y="60" font-family="ui-sans-serif, sans-serif" font-size="15" font-weight="700" fill="#f5f3ff">Ollama · localhost:11434</text>
+    <line x1="20" y1="76" x2="320" y2="76" stroke="#581c87"/>
+    <text x="20" y="100" font-family="ui-sans-serif, sans-serif" font-size="13" font-weight="600" fill="#f5f3ff">Gemma 4 E4B-it · fine-tuned</text>
+    <text x="20" y="120" font-family="ui-monospace, monospace" font-size="11" fill="#e9d5ff">QLoRA r=16 · merged · GGUF q4_k_m · ~3 GB</text>
+    <text x="20" y="140" font-family="ui-monospace, monospace" font-size="11" fill="#e9d5ff">8-rule safety system prompt baked in</text>
+    <text x="20" y="160" font-family="ui-monospace, monospace" font-size="11" fill="#e9d5ff">stream &gt; 30 tok/s on RTX 3090</text>
+    <text x="20" y="184" font-family="ui-sans-serif, sans-serif" font-size="11" fill="#64748b">multilingual · 140+ langs from base</text>
+  </g>
+
+  <!-- Data layer -->
+  <g transform="translate(220 430)">
+    <rect width="240" height="40" rx="8" fill="url(#boxBound)" stroke="#475569" stroke-width="1"/>
+    <text x="20" y="26" font-family="ui-monospace, monospace" font-size="12" fill="#cbd5e1">data/gwas/*.tsv · 12 disorders</text>
+  </g>
+  <g transform="translate(490 430)">
+    <rect width="240" height="40" rx="8" fill="url(#boxBound)" stroke="#475569" stroke-width="1"/>
+    <text x="20" y="26" font-family="ui-monospace, monospace" font-size="12" fill="#cbd5e1">population_params.json</text>
+  </g>
+  <g transform="translate(780 430)">
+    <rect width="340" height="40" rx="8" fill="url(#boxBound)" stroke="#475569" stroke-width="1"/>
+    <text x="20" y="26" font-family="ui-monospace, monospace" font-size="12" fill="#cbd5e1">ml/outputs/psychgeno-gguf/*.gguf</text>
+  </g>
+
+  <!-- Connections -->
+  <line x1="150" y1="320" x2="220" y2="300" stroke="#94a3b8" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="440" y1="300" x2="490" y2="300" stroke="#22d3ee" stroke-width="2" marker-end="url(#arrCyan)"/>
+  <line x1="490" y1="320" x2="440" y2="320" stroke="#22d3ee" stroke-width="2" marker-end="url(#arrCyan)"/>
+  <line x1="730" y1="290" x2="780" y2="290" stroke="#a855f7" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="780" y1="310" x2="730" y2="310" stroke="#a855f7" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Vertical to data -->
+  <line x1="340" y1="400" x2="340" y2="430" stroke="#475569" stroke-width="1.5" stroke-dasharray="3 3"/>
+  <line x1="610" y1="400" x2="610" y2="430" stroke="#475569" stroke-width="1.5" stroke-dasharray="3 3"/>
+  <line x1="950" y1="400" x2="950" y2="430" stroke="#475569" stroke-width="1.5" stroke-dasharray="3 3"/>
+
+  <!-- Cloud denial -->
+  <g transform="translate(40 500)">
+    <text font-family="ui-sans-serif, sans-serif" font-size="13" fill="#f87171">⨯ no upload · ⨯ no telemetry · ⨯ no third-party API in the analysis path</text>
+    <text y="22" font-family="ui-sans-serif, sans-serif" font-size="12" fill="#64748b">the only outbound traffic is the optional crisis-hotline tel: link the user clicks themselves</text>
+  </g>
+</svg>

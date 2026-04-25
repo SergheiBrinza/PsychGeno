@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 380" width="1200" height="380" role="img" aria-label="PsychGeno by the numbers">
+  <defs>
+    <linearGradient id="bgN" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#020617"/>
+      <stop offset="100%" stop-color="#0a1626"/>
+    </linearGradient>
+    <linearGradient id="cardN" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0e1a2b"/>
+      <stop offset="100%" stop-color="#0a1421"/>
+    </linearGradient>
+    <linearGradient id="numGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#67e8f9"/>
+      <stop offset="100%" stop-color="#22d3ee"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="380" fill="url(#bgN)"/>
+
+  <text x="40" y="48" font-family="ui-sans-serif, system-ui, sans-serif" font-size="22" font-weight="700" fill="#e2e8f0">By the numbers</text>
+  <text x="40" y="72" font-family="ui-sans-serif, sans-serif" font-size="13" fill="#64748b">What it took to ship the project end-to-end on a single workstation.</text>
+
+  <g font-family="ui-sans-serif, sans-serif">
+    <g transform="translate(40 110)">
+      <rect width="220" height="100" rx="12" fill="url(#cardN)" stroke="#1e3a5f"/>
+      <text x="20" y="56" font-size="42" font-weight="800" fill="url(#numGrad)">12</text>
+      <text x="20" y="80" font-size="13" fill="#94a3b8">psychiatric disorders</text>
+    </g>
+    <g transform="translate(280 110)">
+      <rect width="220" height="100" rx="12" fill="url(#cardN)" stroke="#1e3a5f"/>
+      <text x="20" y="56" font-size="42" font-weight="800" fill="url(#numGrad)">6</text>
+      <text x="20" y="80" font-size="13" fill="#94a3b8">DTC genome formats</text>
+    </g>
+    <g transform="translate(520 110)">
+      <rect width="220" height="100" rx="12" fill="url(#cardN)" stroke="#1e3a5f"/>
+      <text x="20" y="56" font-size="42" font-weight="800" fill="url(#numGrad)">140+</text>
+      <text x="20" y="80" font-size="13" fill="#94a3b8">languages from base model</text>
+    </g>
+    <g transform="translate(760 110)">
+      <rect width="220" height="100" rx="12" fill="url(#cardN)" stroke="#1e3a5f"/>
+      <text x="20" y="56" font-size="42" font-weight="800" fill="url(#numGrad)">8</text>
+      <text x="20" y="80" font-size="13" fill="#94a3b8">layer safety stack</text>
+    </g>
+
+    <g transform="translate(40 230)">
+      <rect width="220" height="100" rx="12" fill="url(#cardN)" stroke="#1e3a5f"/>
+      <text x="20" y="56" font-size="42" font-weight="800" fill="url(#numGrad)">~1 h</text>
+      <text x="20" y="80" font-size="13" fill="#94a3b8">end-to-end training, single 3090</text>
+    </g>
+    <g transform="translate(280 230)">
+      <rect width="220" height="100" rx="12" fill="url(#cardN)" stroke="#1e3a5f"/>
+      <text x="20" y="56" font-size="42" font-weight="800" fill="url(#numGrad)">3×</text>
+      <text x="20" y="80" font-size="13" fill="#94a3b8">model size reduction (15 → 5 GB)</text>
+    </g>
+    <g transform="translate(520 230)">
+      <rect width="220" height="100" rx="12" fill="url(#cardN)" stroke="#1e3a5f"/>
+      <text x="20" y="56" font-size="42" font-weight="800" fill="url(#numGrad)">&gt;30</text>
+      <text x="20" y="80" font-size="13" fill="#94a3b8">inference tok/s on RTX 3090</text>
+    </g>
+    <g transform="translate(760 230)">
+      <rect width="220" height="100" rx="12" fill="url(#cardN)" stroke="#1e3a5f"/>
+      <text x="20" y="56" font-size="42" font-weight="800" fill="url(#numGrad)">0</text>
+      <text x="20" y="80" font-size="13" fill="#94a3b8">cloud calls in analysis path</text>
+    </g>
+
+    <g transform="translate(1000 110)">
+      <rect width="160" height="220" rx="12" fill="url(#cardN)" stroke="#22d3ee" stroke-width="2"/>
+      <text x="20" y="40" font-size="11" font-family="ui-monospace, monospace" fill="#22d3ee" letter-spacing="1">FOOTPRINT</text>
+      <text x="20" y="74" font-size="13" fill="#cbd5e1">VRAM train: 6 GB</text>
+      <text x="20" y="100" font-size="13" fill="#cbd5e1">VRAM infer: 3 GB</text>
+      <text x="20" y="126" font-size="13" fill="#cbd5e1">Disk infer: 5 GB</text>
+      <text x="20" y="152" font-size="13" fill="#cbd5e1">CPU only: yes</text>
+      <text x="20" y="178" font-size="13" fill="#cbd5e1">Container: 1× compose</text>
+      <text x="20" y="204" font-size="11" fill="#64748b">runs on a laptop</text>
+    </g>
+  </g>
+</svg>

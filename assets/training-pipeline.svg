@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 540" width="1200" height="540" role="img" aria-label="QLoRA training pipeline for PsychGeno">
+  <defs>
+    <linearGradient id="bgT" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#020617"/>
+      <stop offset="100%" stop-color="#0a1626"/>
+    </linearGradient>
+    <linearGradient id="boxBlue" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0e1a2b"/>
+      <stop offset="100%" stop-color="#0a1421"/>
+    </linearGradient>
+    <linearGradient id="boxAccent" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0c4a6e"/>
+      <stop offset="100%" stop-color="#0e7490"/>
+    </linearGradient>
+    <linearGradient id="boxOrange" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#7c2d12"/>
+      <stop offset="100%" stop-color="#9a3412"/>
+    </linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#22d3ee"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="540" fill="url(#bgT)"/>
+
+  <text x="40" y="48" font-family="ui-sans-serif, system-ui, sans-serif" font-size="22" font-weight="700" fill="#e2e8f0">Training pipeline</text>
+  <text x="40" y="74" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#64748b">Single RTX 3090 / 4090 · under one hour end-to-end</text>
+
+  <!-- Stage 1: Data -->
+  <g transform="translate(40 130)">
+    <rect width="220" height="120" rx="12" fill="url(#boxBlue)" stroke="#1e3a5f" stroke-width="1.5"/>
+    <text x="20" y="32" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#22d3ee" letter-spacing="1">STEP 1 · DATA</text>
+    <text x="20" y="60" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" font-weight="700" fill="#f1f5f9">PGC GWAS pull</text>
+    <text x="20" y="84"  font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" fill="#94a3b8">12 disorders · ~1B SNP obs</text>
+    <text x="20" y="102" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" fill="#94a3b8">filter p &lt; 5e-8 · standardise</text>
+  </g>
+
+  <!-- Stage 2: SFT dataset -->
+  <g transform="translate(290 130)">
+    <rect width="220" height="120" rx="12" fill="url(#boxBlue)" stroke="#1e3a5f" stroke-width="1.5"/>
+    <text x="20" y="32" font-family="ui-monospace, monospace" font-size="11" fill="#22d3ee" letter-spacing="1">STEP 2 · DATASET</text>
+    <text x="20" y="60" font-family="ui-sans-serif, sans-serif" font-size="16" font-weight="700" fill="#f1f5f9">333 ShareGPT pairs</text>
+    <text x="20" y="84"  font-family="ui-sans-serif, sans-serif" font-size="12" fill="#94a3b8">EN / DE / RU coverage</text>
+    <text x="20" y="102" font-family="ui-sans-serif, sans-serif" font-size="12" fill="#94a3b8">safety frame baked in</text>
+  </g>
+
+  <!-- Stage 3: Base model -->
+  <g transform="translate(540 130)">
+    <rect width="240" height="120" rx="12" fill="url(#boxAccent)" stroke="#22d3ee" stroke-width="2"/>
+    <text x="20" y="32" font-family="ui-monospace, monospace" font-size="11" fill="#67e8f9" letter-spacing="1">STEP 3 · BASE</text>
+    <text x="20" y="60" font-family="ui-sans-serif, sans-serif" font-size="16" font-weight="700" fill="#f0f9ff">Gemma 4 E4B-it</text>
+    <text x="20" y="84"  font-family="ui-sans-serif, sans-serif" font-size="12" fill="#bae6fd">unsloth/gemma-4-E4B-it</text>
+    <text x="20" y="102" font-family="ui-sans-serif, sans-serif" font-size="12" fill="#bae6fd">4-bit · 4096 ctx · multilingual</text>
+  </g>
+
+  <!-- Stage 4: QLoRA -->
+  <g transform="translate(810 130)">
+    <rect width="350" height="120" rx="12" fill="url(#boxOrange)" stroke="#fb923c" stroke-width="2"/>
+    <text x="20" y="32" font-family="ui-monospace, monospace" font-size="11" fill="#fdba74" letter-spacing="1">STEP 4 · QLORA FINE-TUNE</text>
+    <text x="20" y="60" font-family="ui-sans-serif, sans-serif" font-size="16" font-weight="700" fill="#fff7ed">Unsloth FastModel · r=16 · α=16</text>
+    <text x="20" y="84"  font-family="ui-sans-serif, sans-serif" font-size="12" fill="#fed7aa">3 epochs · batch 2 × grad-accum 4 · adamw_8bit · cosine</text>
+    <text x="20" y="102" font-family="ui-sans-serif, sans-serif" font-size="12" fill="#fed7aa">target_modules = all-linear · train_on_responses_only</text>
+  </g>
+
+  <!-- Arrows row 1 -->
+  <line x1="260" y1="190" x2="290" y2="190" stroke="#22d3ee" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="510" y1="190" x2="540" y2="190" stroke="#22d3ee" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="780" y1="190" x2="810" y2="190" stroke="#22d3ee" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Down -->
+  <line x1="985" y1="250" x2="985" y2="310" stroke="#22d3ee" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Stage 5: Merge -->
+  <g transform="translate(810 320)">
+    <rect width="350" height="100" rx="12" fill="url(#boxBlue)" stroke="#1e3a5f" stroke-width="1.5"/>
+    <text x="20" y="32" font-family="ui-monospace, monospace" font-size="11" fill="#22d3ee" letter-spacing="1">STEP 5 · MERGE</text>
+    <text x="20" y="60" font-family="ui-sans-serif, sans-serif" font-size="16" font-weight="700" fill="#f1f5f9">LoRA adapters → base weights</text>
+    <text x="20" y="84" font-family="ui-sans-serif, sans-serif" font-size="12" fill="#94a3b8">model.safetensors · 15 GB merged</text>
+  </g>
+
+  <!-- Left arrow back -->
+  <line x1="810" y1="370" x2="510" y2="370" stroke="#22d3ee" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Stage 6: Quantise -->
+  <g transform="translate(290 320)">
+    <rect width="220" height="100" rx="12" fill="url(#boxBlue)" stroke="#1e3a5f" stroke-width="1.5"/>
+    <text x="20" y="32" font-family="ui-monospace, monospace" font-size="11" fill="#22d3ee" letter-spacing="1">STEP 6 · GGUF</text>
+    <text x="20" y="60" font-family="ui-sans-serif, sans-serif" font-size="16" font-weight="700" fill="#f1f5f9">Q4_K_M quantise</text>
+    <text x="20" y="84" font-family="ui-sans-serif, sans-serif" font-size="12" fill="#94a3b8">15 GB → 5.0 GB</text>
+  </g>
+
+  <line x1="290" y1="370" x2="260" y2="370" stroke="#22d3ee" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Stage 7: Ollama -->
+  <g transform="translate(40 320)">
+    <rect width="220" height="100" rx="12" fill="url(#boxAccent)" stroke="#22d3ee" stroke-width="2"/>
+    <text x="20" y="32" font-family="ui-monospace, monospace" font-size="11" fill="#67e8f9" letter-spacing="1">STEP 7 · DEPLOY</text>
+    <text x="20" y="60" font-family="ui-sans-serif, sans-serif" font-size="16" font-weight="700" fill="#f0f9ff">ollama create psychgeno</text>
+    <text x="20" y="84" font-family="ui-sans-serif, sans-serif" font-size="12" fill="#bae6fd">Modelfile + 8-rule safety prompt</text>
+  </g>
+
+  <!-- Bottom legend -->
+  <g transform="translate(40 460)" font-family="ui-monospace, monospace" font-size="11" fill="#64748b">
+    <text>loss masked to assistant turns only — base model never updates on user-side text</text>
+    <text y="20">disclaimers in every training example → safety becomes a weight property, not a prompt heuristic</text>
+    <text y="40">final artefact streams through Ollama at &gt; 30 tok/s on a single 3090</text>
+  </g>
+</svg>
